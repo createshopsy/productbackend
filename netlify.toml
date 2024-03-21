@@ -5,5 +5,5 @@
   force = true
   from = "./index.js"
   status = 200
-  to = "/.netlify/functions/index"
+  to = "./netlify/index.html"
 
