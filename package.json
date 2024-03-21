@@ -50,7 +50,6 @@
   "keywords": [],
   "description": "",
   "devDependencies": {
-    "@types/graphql-upload": "^16.0.7",
-    "@vercel/node": "^3.0.24"
+    "@types/graphql-upload": "^16.0.7"
   }
 }
