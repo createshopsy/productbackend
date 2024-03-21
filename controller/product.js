@@ -742,6 +742,7 @@ const chats = async (req, res) => {
 const getmessage = async (req, res) => {
   const id1 = req.params.id;
   const userId = req.userId;
+  console.log(req.userId)
   try {
     const user1 = await users.findById({ _id: id1 });
     const user2 = await users.findById({ _id: userId });

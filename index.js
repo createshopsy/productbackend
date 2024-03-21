@@ -44,18 +44,18 @@ io.on("connection", (socket) => {
   });
 
 
-  socket.on('callUser', (data) => {
-    console.log(`Incoming call from ${data.senderId}`);
-    io.to(data.receiverId).emit('callUser', {
-      signalData: data.signalData,
-      senderId: data.senderId,
-    });
+  // socket.on('callUser', (data) => {
+  //   console.log(`Incoming call from ${data.senderId}`);
+  //   io.to(data.receiverId).emit('callUser', {
+  //     signalData: data.signalData,
+  //     senderId: data.senderId,
+  //   });
   
-    socket.on('answerCall', (data) => {
-      console.log(`Answering call from ${data.senderId}`);
-      io.to(data.senderId).emit('callAccepted', data.signal);
-    });
-  });
+  //   socket.on('answerCall', (data) => {
+  //     console.log(`Answering call from ${data.senderId}`);
+  //     io.to(data.senderId).emit('callAccepted', data.signal);
+  //   });
+  // });
 
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
