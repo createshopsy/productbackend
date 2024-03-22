@@ -3,14 +3,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const http = require("serverless-http");
+const serverless = require("serverless-http");
 
 app.use(cors());
 const port = process.env.PORT || 6867;
 app.use(express.json());
-const product_route = require("./routing/routes");
-const users = require("./schema/register");
-const { Chats } = require("./schema/Chat");
+const product_route = require("../routing/routes");
+const users = require("../schema/register");
+const { Chats } = require("../schema/Chat");
 
 app.use("/.netlify/functions/api/products", product_route);
 const io = require("socket.io")(7654, {
