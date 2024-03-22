@@ -3,7 +3,6 @@
   node_bundler = "esbuild"
 [[redirects]]
   force = true
-  from = "./index.js"
+  from = "./index.js*"
   status = 200
-  to = "./netlify/index.html"
-
+  to = "/api/products/:splat"
