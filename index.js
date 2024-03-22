@@ -11,7 +11,7 @@ const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 
-app.use("/.netlify/functions-internal/api/products", product_route);
+app.use("/.netlify/functions/api/products", product_route);
 const io = require("socket.io")(7654, {
   cors: {
     origin: "http://localhost:3000",
