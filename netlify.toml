@@ -1,9 +1,8 @@
-[build]
-  command = "npm run build"
-  publish = "build"
+[dev]
+functions = "netlify-functions"
+functionsPort = 4646
 
-[functions]
-  node_bundler = "esbuild"
-  included_files = ["/index"]
-  directory = "/index"
-  command = "npm start"
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200
