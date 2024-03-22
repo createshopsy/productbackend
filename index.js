@@ -3,13 +3,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const http = require("serverless-http");
+
 app.use(cors());
 const port = process.env.PORT || 6867;
 app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-// const db = require("./productdb");
 
 app.use("/.netlify/functions/api/products", product_route);
 const io = require("socket.io")(7654, {
@@ -43,20 +44,6 @@ io.on("connection", (socket) => {
     io.to(senderId).emit("receiveMessage", getallmessage);
   });
 
-
-  socket.on('callUser', (data) => {
-    console.log(`Incoming call from ${data.senderId}`);
-    io.to(data.receiverId).emit('callUser', {
-      signalData: data.signalData,
-      senderId: data.senderId,
-    });
-  
-    socket.on('answerCall', (data) => {
-      console.log(`Answering call from ${data.senderId}`);
-      io.to(data.senderId).emit('callAccepted', data.signal);
-    });
-  });
-
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
       (key) => storedata[key] === socket.id
@@ -68,8 +55,12 @@ io.on("connection", (socket) => {
   });
 });
 
-
-
-app.listen(port, async () => {
-  mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
+mongoose.connection.on("connected", () => {
+  console.log("Connected to MongoDB");
+});
+
+module.exports.handler = serverless(app);
