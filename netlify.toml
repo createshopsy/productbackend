@@ -1,2 +1,9 @@
 [build]
-functions="functions"
+  command = "npm run build"
+  publish = "build"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["/index"]
+  directory = "/index"
+  command = "npm start"
