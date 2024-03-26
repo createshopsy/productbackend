@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const serverless = require("serverless-http");
 
 app.use(cors());
 const port = process.env.PORT || 6867;
@@ -10,8 +11,9 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
+const serverlessHttp = serverless(app);
 
-app.use("/.netlify/functions/api/products", product_route);
+app.use("/.netlify/functions/", product_route);
 const io = require("socket.io")(7654, {
   cors: {
     origin: "http://localhost:3000",
@@ -54,7 +56,8 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(port ,async()=>{
+app.listen(port,async()=>{
   await mongoose.connect(process.env.MONGO_URL)
 })
 
+module.exports = serverlessHttp;
