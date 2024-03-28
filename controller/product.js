@@ -718,7 +718,6 @@ const getsingleproductorder = async (req, res) => {
 const chats = async (req, res) => {
   const userId = req.userId;
   const { To, message } = req.body;
-  // console.log( req.file.filename)
 
   try {
     const fromUser = await users.findOne({ _id: userId });
@@ -742,7 +741,7 @@ const chats = async (req, res) => {
 const getmessage = async (req, res) => {
   const id1 = req.params.id;
   const userId = req.userId;
-  console.log(req.userId)
+  console.log(req.userId);
   try {
     const user1 = await users.findById({ _id: id1 });
     const user2 = await users.findById({ _id: userId });
@@ -755,6 +754,23 @@ const getmessage = async (req, res) => {
     return res.status(200).json({ message: "success", getallmessage });
   } catch (error) {
     res.status(400).json(error);
+  }
+};
+
+const videocall = async (req, res) => {
+  const userId = await req.userId;
+  const { To } = await req.body;
+  try {
+    const receiver = await users.findOne({ _id: To });
+    if (receiver) {
+      const message = `Incoming call from ${userId}`;
+      res.status(200).json(message);
+    }
+    else {
+      res.status(406).send(`User with the given id=${To} is not available.`);
+    }
+  } catch (error) {
+    console.error("Error during video call:", error);
   }
 };
 
@@ -779,4 +795,5 @@ module.exports = {
   getsingleproductorder,
   chats,
   getmessage,
+  videocall,
 };

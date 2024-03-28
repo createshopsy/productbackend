@@ -35,6 +35,7 @@ const {
   getsingleproductorder,
   chats,
   getmessage,
+  videocall,
  
 } = require("../controller/product");
 const {
@@ -88,7 +89,7 @@ router.post("/add-to-cart", authenticateUser, addToCart);
 router.post("/payment", authenticateUser, payment);
 router.post("/paywithproduct/:id", authenticateUser, paymentwithsingleproduct);
 router.post("/savechats",authenticateUser,chats)
-
+router.post("/videocall",authenticateUser, videocall)
 // router.post("/updateprofile",changeprofile)
 
 //---update--

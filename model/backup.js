@@ -1,333 +1,114 @@
-// }
-// // const { Client } = require('@elastic/elasticsearch');
-// // const client = new Client({ node:'http://localhost:4545' });
 
-// // const elasticsearch = async (req, res) => {
-// //   try {
-// //     const { q } = req.query;
-// //     console.log(req.query);
+// ================calls===========================
 
-//     // const response = await client.search({
-//     //   index: "search",
-//     //   body: {
-//     //     query: {
-//     //       match: {
-//     //         title: {
-//     //           query: q
-//     //         }
-//     //       }
-//     //     }
-//     //   }
-//     // });
-
-// //     res.json(response.body.hits.hits);
-// //   } catch (error) {
-// //     res.status(500).json({ error: error.message });
-// //   }
-// // };
-// const express = require('express');
-// const { Client } = require('@elastic/elasticsearch');
-// const app = express();
-// const client = new Client({ node: 'http://localhost:9200' });
-
-// app.get('/search', async (req, res) => {
-//   try {
-//     const { q } = req.query;
-//     console.log(req.query);
-
-//     const response = await client.search({
-//       index: 'products',
-//       body: {
-//         query: {
-//           match: { title: q }
-//         }
-//       }
-//     });
-
-//     console.log(response);
-//     res.json(response.hits.hits);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-// app.listen(3000, () => {
-//   console.log('Server is running on port 3000');
-// });
-// const elasticsearch = require('elasticsearch');
-
-// const client = new elasticsearch.Client({
-//   // Elasticsearch client configuration
-// });
-
-// const searchProductsByTitle = async (req, res) => {
-//   try {
-//     const { q } = req.query;
-//     console.log(req.query);
-    
-//     const response = await client.search({
-//       index: 'products_index',
-//       body: {
-//         query: {
-//           match: { title: q }
-//         }
-//       }
-//     });
-
-//     console.log(response);
-//     res.json(response.hits.hits);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-
-
-
-
-
-
-// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// const { Client } = require('@elastic/elasticsearch');
-// const client = new Client({ node: 'http://localhost:9200' }); // Update with your Elasticsearch server URL// Inside your product creation/update logic
-// await client.index({
-//   index: 'products',
-//   body: {
-//     title: 'Product Title',
-//     // Add other product details here
-//   }
-// });// Inside your product creation/update logic
-// await client.index({
-//     index: 'products',
-//     body: {
-//       title: 'Product Title',
-//       // Add other product details here
-//     }
-//   });
-// const { body } = await client.search({
-//     index: 'products',
-//     body: {
-//       query: {
-//         match: { title: 'Search Keyword' } // Update with the title you want to search for
-//       }
-//     }
-//   });
-  
-//   const products = body.hits.hits.map(hit => hit._source);
-//   res.status(200).json({ message: 'success', products });
-// const { Client } = require("@elastic/elasticsearch");
-// const client = new Client({ node: "http://localhost:9200" });
-
-// // Define the product schema mapping
-// const productMapping = {
-//   properties: {
-//     title: { type: "text" },
-//     description: { type: "text" },
-//     price: { type: "float" },
-//     in_stock: { type: "boolean" },
-//     category: { type: "keyword" },
-//   }
-// };
-
-// // Create an index for products with the defined mapping
-// async function createProductIndex() {
-//   await client.indices.create({
-//     index: "products",
-//     body: {
-//       mappings: {
-//         properties: productMapping
-//       }
-//     }
-//   });
-//   console.log("Product index created with mapping");
-// }
-
-// // Index sample product data
-// async function indexSampleProducts() {
-//   const products = [
-//     { title: "Product 1", description: "Description 1", price: 19.99, in_stock: true, category: "Electronics" },
-//     { title: "Product 2", description: "Description 2", price: 29.99, in_stock: false, category: "Clothing" }
-//   ];
-
-//   const body = products.flatMap(doc => [{ index: { _index: "products" } }, doc]);
-//   const { body: bulkResponse } = await client.bulk({ refresh: true, body });
-//   console.log("Sample products indexed:", bulkResponse);
-// }
-
-// // Search for products based on a keyword
-// async function searchProducts(keyword) {
-//   const { body } = await client.search({
-//     index: "products",
-//     body: {
-//       query: {
-//         match: { title: keyword }
-//       }
-//     }
-//   });
-
-//   const products = body.hits.hits.map(hit => hit._source);
-//   console.log("Products found:", products);
-// }
-
-// // Execute functions to create index, index sample products, and search for products
-// createProductIndex().then(() => {
-//   indexSampleProducts().then(() => {
-//     searchProducts("Product 1");
-//   });
-// });
-// Define a route for product search
-// app.get('/api/products/search', async (req, res) => {
-    // try {
-    //   const { body } = await client.search({
-    //     index: "products",
-    //     body: {
-    //       query: {
-    //         match: { title: req.query.keyword }, 
-    //       },
-    //     },
-    //   });
-  
-    //   const products = body.hits.hits.map((hit) => hit._source);
-    //   res.status(200).json({ message: "success", products });
-    // } catch (error) {
-    //   res.status(500).json({ message: "error", error: error.message });
-    // }
-// //   });
-// const { body } = await client.search({
-//     index: "products",
-//     body: {
-//       query: {
-//         match: { title: "Product Title" }, // Update "Product Title" with your search keyword
-//       },
-//     },
-//   });
-// const { Client } = require("@elastic/elasticsearch");
-// const port = 9200; // Assuming port is defined somewhere in your code
-// const client = new Client({ node: `http://localhost:${port}` });
-
-// // Export the client object for use in other modules
-// module.exports = client;
-
-// console.log(client, "Connected to Elasticsearch");
-
-
-
-
-// const { Client } = require("@elastic/elasticsearch");
-// const elasticClient = require("./path/to/your/elasticsearch/client"); // Import the Elasticsearch client
-
-// const searchElastic = async (keyword) => {
-//   try {
-//     const { body } = await elasticClient.search({
-//       index: "products",
-//       body: {
-//         query: {
-//           match: { title: keyword }
-//         }
-//       }
-//     });
-
-//     const products = body.hits.hits.map(hit => hit._source);
-//     return products;
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Elasticsearch search error");
-//   }
-// };
-// const getallproducts = async (req, res) => {
-//     const { page = 1, limit = 6, keyword } = req.query;
-//     const limitset = Number(limit);
-  
-//     try {
-//       let product;
-//       if (keyword) {
-//         product = await searchElastic(keyword); // Search in Elasticsearch if keyword is provided
-//       } else {
-//         product = await products.find().limit(limitset); // Default MongoDB query
-//       }
-  
-//       const currentPage = page;
-//       res.status(200).json({ message: "success", product, currentPage });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ message: "Internal Server Error" });
-//     }
-//   };
-
-
-
-// server
-
-// // app.js
-
-// const express = require("express");
-// const app = express();
-// const port = process.env.PORT || 6867;
-
-// // Middleware
-// app.use(express.json());
-
-// // Define a route for searching
-// app.get('/api/search', async (req, res) => {
-//   const { keyword } = req.query;
-
-//   // Perform search logic here
-//   // You can use Elasticsearch or any other search engine to retrieve results based on the keyword
-
-//   // For demonstration purposes, sending back a sample response with the keyword
-//   res.status(200).json({ message: "Search results", keyword });
-// });
-
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
-// http://localhost:6867/api/search?
-
-
-// esClient.search({
-//   index: 'products',
-//   type: 'products',
-//   body: {
-//     query: {
-//       multi_match: {
-//         query: 'server js',
-//         fields: ['title', 'description']
-//       }
-//     }
-//   }
-// }).then(function(response) {
-//   const  hits = response.hits.hits;
-//   console.log(hits,"hitsd")
-// }).catch(function (error) {
-//   console.trace(error.message);
-// });
-// import React, { useState, useEffect, useRef } from 'react';
-// import { io } from 'socket.io-client';
-// import axios from 'axios';
-// import Peer from 'simple-peer';
-// import Webcam from 'react-webcam';
-// import { Button } from '@material-ui/core';
-// import VideoCallIcon from '@material-ui/icons/VideoCall';
+// import { useState, useEffect, useRef } from "react";
+// import io from "socket.io-client";
+// import axios from "axios";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 
 // const Showchat = () => {
-//   // Existing code...
+//   const [userName, setUserName] = useState();
+//   const [getalluser, Setgetaluser] = useState();
+//   const [allMessages, setAllMessages] = useState([]);
+//   const [inputValue, setInputValue] = useState("");
+//   const [selectedUserId, setSelectedUserId] = useState("");
+//   const [selectedIndex, setSelectedIndex] = useState();
+//   const [showWebcam, setShowWebcam] = useState(false);
+//   const [stream, setStream] = useState();
+//   const videoRef = useRef();
+//   const socket = io("http://localhost:7654");
 
-//   const handleVideoCall = () => {
-//     setShowWebcam(!showWebcam);
-//     callUser(selectedUserId);
+//   const getusersdata = () => {
+//     axios
+//       .get("http://localhost:4545/api/products/user", {
+//         headers: { Authorization: ` ${token}` },
+//       })
+//       .then((response) => {
+//         setUserName(response?.data?.newuser);
+//       });
 //   };
 
+//   const callUser = () => {
+// socket.emit("receiveCall", {
+//   senderId: userName._id,
+//   receiverId: selectedUserId,
+// });
+
+//     navigator.mediaDevices
+//       .getUserMedia({ audio: true, video: true })
+//       .then((stream) => {
+//         setStream(stream);
+//         if (videoRef.current) {
+//           videoRef.current.srcObject = stream;
+//         }
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   };
+
+//   useEffect(() => {
+//     if (socket) {
+//       socket.on("incomingCall", (data) => {
+//         // Handle incoming call notification
+//         console.log("Incoming call from user: ", data.callerId);
+//       });
+
+//       socket.on("callAccepted", (data) => {
+//         // Handle call acceptance logic
+//         console.log("Call accepted by user: ", data.receiverId);
+//       });
+
+//       socket.on("callRejected", (data) => {
+//         // Handle call rejection logic
+//         console.log("Call rejected by user: ", data.receiverId);
+//       });
+
+//       socket.on("disconnect", () => {
+//         console.log("Disconnected from server");
+//       });
+//     }
+//   }, [socket]);
+
 //   return (
-//     <div>
-//       {/* Existing code... */}
-//       {showWebcam && <Webcam height={300} width={300} videoConstraints={videoConstraints} />}
-//       <Button onClick={handleVideoCall}>
-//         {showWebcam ? 'End Call' : 'Start Video Call'}
-//       </Button>
-//     </div>
+//     // Your existing JSX code here
 //   );
 // };
 
 // export default Showchat;
+// Backend code for receiving calls using Socket.IO
+
+// Add a new event listener for receiving calls
+
+// =================backendreceivecall===============================
+// socket.on("receiveCall", async (data) => {
+//     const receiverId = storedata[data.receiverId];
+//     const senderId = storedata[data.senderId];
+  
+//     // Handle the call logic here
+//     // You can emit events to notify the sender and receiver about the call
+//     // For example:
+//     // io.to(receiverId).emit("incomingCall", { callerId: data.senderId });
+//   });
+  
+//   // Handle call acceptance event
+//   socket.on("acceptCall", async (data) => {
+//     const receiverId = storedata[data.receiverId];
+//     const senderId = storedata[data.senderId];
+  
+//     // Handle the call acceptance logic here
+//     // You can establish a connection between the caller and receiver
+//     // For example:
+//     // io.to(senderId).emit("callAccepted", { receiverId: data.receiverId });
+//   });
+  
+//   // Handle call rejection event
+//   socket.on("rejectCall", async (data) => {
+//     const receiverId = storedata[data.receiverId];
+//     const senderId = storedata[data.senderId];
+  
+//     // Handle the call rejection logic here
+//     // You can notify the caller that the call was rejected
+//     // For example:
+//     // io.to(senderId).emit("callRejected", { receiverId: data.receiverId });
+//   });
