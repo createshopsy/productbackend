@@ -49,6 +49,13 @@ io.on("connection", (socket) => {
     io.to(receiverId).emit("incomingCall", { callerId: senderId });
   });
 
+  socket.on("acceptCall", async (data) => {
+    console.log(data,"data")
+    const receiverId = storedata[data.receiverId];
+    const senderId = storedata[data.senderId];
+    io.to(senderId).emit("callAccepted", { receiverId: receiverId });
+  });
+
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
       (key) => storedata[key] === socket.id

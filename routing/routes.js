@@ -70,8 +70,6 @@ router.get("/user", authenticateUser, getbyiduser);
 router.get("/success/:id", authenticateUser, ordersuccess);
 router.get("/singleordersuccess/:id", authenticateUser, getsingleproductorder);
 router.get("/getsequence", getsequence);
-
-
 // router.get("/getuser",authenticateUser, getuser);
 // router.get("/show",verifyed,tokenverify);
 // router.get("/sendmail",sendmail)
