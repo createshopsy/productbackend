@@ -636,8 +636,8 @@ const paymentwithsingleproduct = async (req, res) => {
       billing_address_collection: "required",
       mode: "payment",
       success_url:
-        "http://localhost:3000/successorder?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:3000/cancel",
+        "https://frontend-mu-indol.vercel.app/successorder?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://frontend-mu-indol.vercel.app/cancel",
     });
     res.json({ id: session.id });
   } catch (error) {
