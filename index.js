@@ -14,7 +14,7 @@ const { Chats } = require("./schema/Chat");
 app.use("/api/products", product_route);
 const io = require("socket.io")(7654, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -56,6 +56,10 @@ io.on("connection", (socket) => {
     io.to(senderId).emit("callAccepted", { receiverId: receiverId });
   });
 
+  socket.on("endCall", (data) => {
+    console.log("User ended call with:", data.senderId);
+    socket.broadcast.emit("endCall", data);
+  })
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
       (key) => storedata[key] === socket.id

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoosastic = require("mongoosastic");
+
 
 const productSchema = new mongoose.Schema(
   {
@@ -8,11 +8,11 @@ const productSchema = new mongoose.Schema(
     stock: { type: Number, required: true},
     price: { type: Number, required: true},
     image: { type: Array, required: true },
-    video: { type: String, required: true },
+    video: { type: Array, required: true },
   },
   { timestamps: true }
 );
-// productSchema.plugin(mongoosastic);
+
 
 const products=mongoose.model("products", productSchema);
 module.exports={products}
