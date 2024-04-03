@@ -21,8 +21,10 @@ const io = require("socket.io")(server,{
     methods: ["GET", "POST"],
   },
 });
+
 const storedata = {};
 io.on("connection", (socket) => {
+
   console.log("connected with user");
 
   socket.on("user_connected", async (data) => {
