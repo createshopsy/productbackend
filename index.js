@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const http = require("http");
 const app = express();
 const cors = require("cors");
 
@@ -13,11 +14,12 @@ const { Chats } = require("./schema/Chat");
 
 app.use("/api/products", product_route);
 
-const http = require('http').Server(app);
+
+const server = http.createServer(app);
 // const io = require('socket.io')(http);
-const io = require("socket.io")(http,{
+const io = require("socket.io")(server,{
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
