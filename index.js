@@ -14,10 +14,10 @@ const { Chats } = require("./schema/Chat");
 
 const http = require("http");
 const server = http.createServer(app);
-console.log("server",server);
+
 const io = require("socket.io")(server,{
   cors: {
-    origin: "*",
+    origin: "https://frontend-mu-indol.vercel.app",
     methods: ["GET", "POST"],
   },
 });
