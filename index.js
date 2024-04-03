@@ -12,7 +12,10 @@ const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 
 app.use("/api/products", product_route);
-const io = require("socket.io")(7654, {
+
+const http = require('http').Server(app);
+// const io = require('socket.io')(http);
+const io = require("socket.io")(http,{
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -50,7 +53,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("acceptCall", async (data) => {
-    console.log(data,"data")
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
     io.to(senderId).emit("callAccepted", { receiverId: receiverId });
