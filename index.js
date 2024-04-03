@@ -10,14 +10,14 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-
+app.use("/api/products", product_route);
 
 const http = require("http");
 const server = http.createServer(app);
 
 const io = require("socket.io")(server,{
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -75,7 +75,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/api/products", product_route);
 
 
 app.listen(port, async () => {
