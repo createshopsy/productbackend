@@ -17,7 +17,7 @@ const http = require('http').Server(app);
 // const io = require('socket.io')(http);
 const io = require("socket.io")(http,{
   cors: {
-    origin: "*",
+    origin: "https://frontend-mu-indol.vercel.app",
     methods: ["GET", "POST"],
   },
 });
