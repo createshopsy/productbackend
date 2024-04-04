@@ -4,16 +4,17 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 
-app.use(cors());
+app.use(cors("*"));
 const port = process.env.PORT || 6867;
 app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-const http = require('http');
-const socketio = require('socket.io');
+const http = require("http");
+const socketio = require("socket.io");
 const server = http.createServer(app);
 const io = socketio(server);
+
 // const http = require("http");
 // const server = http.createServer(app);
 
@@ -48,7 +49,7 @@ io.on("connection", (socket) => {
     io.to(senderId).emit("receiveMessage", getallmessage);
   });
   socket.on("Calling", async (data) => {
-    console.log(`incoming call from ${data.senderId}`)
+    console.log(`incoming call from ${data.senderId}`);
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
     io.to(receiverId).emit("incomingCall", { callerId: senderId });
@@ -63,7 +64,7 @@ io.on("connection", (socket) => {
   socket.on("endCall", (data) => {
     console.log("User ended call with:", data.senderId);
     socket.broadcast.emit("endCall", data);
-  })
+  });
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
       (key) => storedata[key] === socket.id
@@ -76,7 +77,6 @@ io.on("connection", (socket) => {
 });
 
 app.use("/api/products", product_route);
-
 
 app.listen(port, async () => {
   await mongoose.connect(process.env.MONGO_URL);
