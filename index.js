@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 
-app.use(cors("*"));
+app.use(cors("https://frontend-mu-indol.vercel.app"));
 const port = process.env.PORT || 6867;
 app.use(express.json());
 const product_route = require("./routing/routes");
