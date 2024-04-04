@@ -10,7 +10,6 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-const { WebSocketServer } = require('ws');
 const http = require("http");
 
 const server = http.createServer();
@@ -20,7 +19,7 @@ const server = http.createServer();
 // const http = require("http");
 // const server = http.createServer(app);
 
-const io = require("socket.io")(port,{
+const io = require("socket.io")(server,{
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
