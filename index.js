@@ -15,17 +15,17 @@ const { Chats } = require("./schema/Chat");
 const http = require("http");
 const socketio = require("socket.io");
 const server = http.createServer(app);
-const io = socketio(server);
+// const io = socketio(server);
 
 // const http = require("http");
 // const server = http.createServer(app);
 
-// const io = require("socket.io")(http,{
-//   cors: {
-//     origin: "*",
-//     methods: ["GET", "POST"],
-//   },
-// });
+const io = require("socket.io")(server,{
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 const storedata = {};
 io.on("connection", (socket) => {
   console.log("connected with user");
