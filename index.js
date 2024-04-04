@@ -4,9 +4,7 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 
-app.use(cors({
-  origin: "*"
-}))
+app.use(cors())
 const port = process.env.PORT || 6867;
 app.use(express.json());
 const product_route = require("./routing/routes");
@@ -20,7 +18,7 @@ const server = http.createServer(app);
 // const http = require("http");
 // const server = http.createServer(app);
 
-const io = require("socket.io")(7654,{
+const io = require("socket.io")(server,{
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
