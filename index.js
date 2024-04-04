@@ -10,9 +10,11 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
+const { WebSocketServer } = require('ws');
 const http = require("http");
-// const socketio = require("socket.io");
-const server = http.createServer(app);
+
+const server = http.createServer();
+// const io = new Server({ server });
 // const io = socketio(server);
 
 // const http = require("http");
@@ -24,6 +26,7 @@ const io = require("socket.io")(port,{
     methods: ["GET", "POST"],
   },
 });
+
 console.log(io,"io")
 app.use("/api/products", product_route);
 
