@@ -13,24 +13,25 @@ const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 const http = require("http");
-const socketio = require("socket.io");
+// const socketio = require("socket.io");
 const server = http.createServer(app);
 // const io = socketio(server);
 
 // const http = require("http");
 // const server = http.createServer(app);
 
-const io = require("socket.io")(server,{
+const io = require("socket.io")(7654,{
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   },
 });
-
+console.log(io,"io")
 app.use("/api/products", product_route);
 
 const storedata = {};
 io.on("connection", (socket) => {
+  console.log(socket,"socket");
   console.log("connected with user");
 
   socket.on("user_connected", async (data) => {
