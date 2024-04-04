@@ -26,6 +26,9 @@ const io = require("socket.io")(server,{
     methods: ["GET", "POST"],
   },
 });
+
+app.use("/api/products", product_route);
+
 const storedata = {};
 io.on("connection", (socket) => {
   console.log("connected with user");
@@ -78,7 +81,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/api/products", product_route);
 
 app.listen(port, async () => {
   await mongoose.connect(process.env.MONGO_URL);
