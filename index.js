@@ -12,7 +12,7 @@ const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 const http = require("http");
 
-const server = http.createServer();
+const server = http.createServer(app);
 // const io = new Server({ server });
 // const io = socketio(server);
 
