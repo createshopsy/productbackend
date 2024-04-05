@@ -12,7 +12,7 @@ const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 const { Server } = require("socket.io");
 const httpServer = require("http");
-// const server = http.createServer(app);
+const server = httpServer.createServer(app);
 // const http = require('http').Server(app);
 
 // const io = require("socket.io")(7654, {
@@ -21,9 +21,9 @@ const httpServer = require("http");
 //     methods: ["GET", "POST"],
 //   },
 // });
-const io = new Server(httpServer, {
+const io = new Server(server, {
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app/chats",
+    origin: "https://frontend-mu-indol.vercel.app",
 
     credentials: true,
   },
