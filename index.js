@@ -10,14 +10,22 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-// const http = require('http');
+const { Server } = require("socket.io");
+const httpServer = require("http");
 // const server = http.createServer(app);
 // const http = require('http').Server(app);
 
-const io = require("socket.io")(7654, {
+// const io = require("socket.io")(7654, {
+//   cors: {
+//     origin: "*",
+//     methods: ["GET", "POST"],
+//   },
+// });
+const io = new Server(httpServer, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
+    origin: "https://frontend-mu-indol.vercel.app",
+
+    credentials: true,
   },
 });
 
@@ -32,7 +40,7 @@ io.on("connection", (socket) => {
   socket.on("typing", (data) => {
     const receiverId = storedata[data.receiverId];
     io.to(receiverId).emit("typingResponse", data.senderId);
-  })
+  });
 
   socket.on("sendMessage", async (data) => {
     const receiverId = storedata[data.receiverId];
