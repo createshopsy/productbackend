@@ -3,6 +3,12 @@ const secretKey = "your-secret-key";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Sequence = require("../schema/Sequence");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: "dvifsulmi",
+  api_key: "761136893464741",
+  api_secret: "gcgymC9Qe8hLeDpmnkCEeZkDS6g",
+});
 
 //---verified user--//
 
@@ -124,16 +130,16 @@ const updateimage = async (req, res) => {
 
   try {
     if (req.file) {
-      updateData.image = req.file.filename;
+      const result = await cloudinary.uploader.upload(req.file.path);
+      updateData.image = result.secure_url;
     }
 
-    const update = await register
-      .findByIdAndUpdate(userId, updateData, { new: true })
-      .select("image");
+    const update = await register.findByIdAndUpdate(userId, updateData, { new: true }).select("image");
 
     if (!update) {
       return res.status(404).json({ message: "User not found" });
     }
+
     res.status(200).json({ message: "User updated successfully", update });
   } catch (error) {
     console.error(error);

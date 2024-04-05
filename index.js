@@ -14,7 +14,7 @@ const { Chats } = require("./schema/Chat");
 // const server = http.createServer(app);
 // const http = require('http').Server(app);
 
-const io = require("socket.io")(7654,{
+const io = require("socket.io")(7654, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -24,12 +24,16 @@ const io = require("socket.io")(7654,{
 const storedata = {};
 io.on("connection", (socket) => {
   console.log("connected with user");
-
   socket.on("user_connected", async (data) => {
     if (data) {
       storedata[data.userId] = socket.id;
     }
   });
+  socket.on("typing", (data) => {
+    const receiverId = storedata[data.receiverId];
+    io.to(receiverId).emit("typingResponse", data.senderId);
+  })
+
   socket.on("sendMessage", async (data) => {
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
@@ -46,7 +50,7 @@ io.on("connection", (socket) => {
     io.to(senderId).emit("receiveMessage", getallmessage);
   });
   socket.on("Calling", async (data) => {
-    console.log(`incoming call from ${data.senderId}`)
+    console.log(`incoming call from ${data.senderId}`);
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
     io.to(receiverId).emit("incomingCall", { callerId: senderId });
@@ -61,7 +65,7 @@ io.on("connection", (socket) => {
   socket.on("endCall", (data) => {
     console.log("User ended call with:", data.senderId);
     socket.broadcast.emit("endCall", data);
-  })
+  });
   socket.on("disconnect", () => {
     const userId = Object.keys(storedata).find(
       (key) => storedata[key] === socket.id
@@ -74,7 +78,6 @@ io.on("connection", (socket) => {
 });
 
 app.use("/api/products", product_route);
-
 
 app.listen(port, async () => {
   await mongoose.connect(process.env.MONGO_URL);
