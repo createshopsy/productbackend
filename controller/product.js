@@ -46,6 +46,7 @@ const getproducts = async (req, res) => {
 
 const postproduct = async (req, res) => {
   const { title, description, stock, price } = req.body;
+  console.log(req?.files?.File, "filesssssssssss");
   try {
     if (!req.files) {
       return res.status(400).json({ message: "No file uploaded." });
@@ -70,6 +71,8 @@ const postproduct = async (req, res) => {
     )
       .then((res) => res.toString())
       .catch((e) => console.error("error", e));
+
+      
 
     const product = new products({
       title: title,
@@ -765,8 +768,7 @@ const videocall = async (req, res) => {
     if (receiver) {
       const message = `Incoming call from ${userId}`;
       res.status(200).json(message);
-    }
-    else {
+    } else {
       res.status(406).send(`User with the given id=${To} is not available.`);
     }
   } catch (error) {

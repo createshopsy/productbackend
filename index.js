@@ -12,11 +12,11 @@ const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 // const http = require('http');
 // const server = http.createServer(app);
-const http = require('http').Server(app);
+// const http = require('http').Server(app);
 
-const io = require("socket.io")(http,{
+const io = require("socket.io")(7654,{
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
