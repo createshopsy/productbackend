@@ -23,7 +23,7 @@ const httpServer = require("http");
 // });
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app",
+    origin: "https://frontend-mu-indol.vercel.app/chats",
 
     credentials: true,
   },
