@@ -72,8 +72,6 @@ const postproduct = async (req, res) => {
       .then((res) => res.toString())
       .catch((e) => console.error("error", e));
 
-      
-
     const product = new products({
       title: title,
       description: description,
@@ -776,6 +774,24 @@ const videocall = async (req, res) => {
   }
 };
 
+// const { Vonage } = require('@vonage/server-sdk')
+
+// const vonage = new Vonage({
+//   apiKey: "c4b503bc",
+//   apiSecret: "B8e26Qmc7wVGbq9e"
+// })
+
+// const from = "Vonage APIs"
+// const to = "918102473490"
+// const text = 'A text message sent using the Vonage SMS API'
+
+// async function sendSMS() {
+//     await vonage.sms.send({to, from, text})
+//         .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+//         .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+// }
+
+// sendSMS();
 module.exports = {
   getproducts,
   postproduct,

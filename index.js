@@ -3,6 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const twilio = require("twilio");
+
+const client = new twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_TOKEN
+);
 
 app.use(cors());
 const port = process.env.PORT || 6867;
@@ -10,18 +16,11 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-const { Server } = require("socket.io");
-const httpServer = require("http");
-// const server = httpServer.createServer(app);
-// const http = require('http').Server(app);
+// const httpServer = require("http");
 
-// const io = require("socket.io")(7654, {
-//   cors: {
-//     origin: "*",
-//     methods: ["GET", "POST"],
-//   },
-// });
-const io = require("socket.io")(httpServer, {
+// const server = httpServer.createServer(app);
+
+const io = require("socket.io")(7654, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -29,6 +28,7 @@ const io = require("socket.io")(httpServer, {
     credentials: true,
   },
 });
+
 const storedata = {};
 io.on("connection", (socket) => {
   console.log("connected with user");
@@ -43,11 +43,19 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", async (data) => {
+  
+    client.messages
+      .create({
+        body: data.message,
+        from: "+12513090514",
+        to: "+918102473490",
+      })
+      .then((message) => console.log(message));
+
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
     const id1 = data.receiverId;
     const userId = data.senderId;
-
     const user1 = await users.findById({ _id: id1 });
     const user2 = await users.findById({ _id: userId });
     const getallmessage = await Chats.aggregate([
