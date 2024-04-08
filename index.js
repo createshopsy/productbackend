@@ -23,7 +23,7 @@ const httpServer = require("http");
 // });
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "https://frontend-mu-indol.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
