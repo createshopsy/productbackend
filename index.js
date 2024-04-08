@@ -3,6 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const twilio = require("twilio");
+
+const client = new twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_TOKEN
+);
 
 app.use(cors());
 const port = process.env.PORT || 6867;
@@ -18,7 +24,8 @@ const io = require("socket.io")(7654, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-  
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
   },
 });
 
@@ -36,7 +43,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", async (data) => {
-  
+
+    client.messages
+      .create({
+        body: data.message,
+        from: "+12513090514",
+        to: "+918102473490",
+      })
+      .then((message) => console.log(message));
 
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
