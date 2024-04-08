@@ -12,7 +12,7 @@ const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 const { Server } = require("socket.io");
 const httpServer = require("http");
-const server = httpServer.createServer(app);
+// const server = httpServer.createServer(app);
 // const http = require('http').Server(app);
 
 // const io = require("socket.io")(7654, {
@@ -21,13 +21,14 @@ const server = httpServer.createServer(app);
 //     methods: ["GET", "POST"],
 //   },
 // });
-const io = new Server(server, {
+const io = require("socket.io")(httpServer, {
   cors: {
     origin: "https://frontend-mu-indol.vercel.app",
     methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
   },
 });
-
 const storedata = {};
 io.on("connection", (socket) => {
   console.log("connected with user");
