@@ -23,7 +23,7 @@ const server = httpServer.createServer(app);
 // });
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000/chats",
+    origin: "https://frontend-mu-indol.vercel.app",
     methods: ["GET", "POST"],
   },
 });
