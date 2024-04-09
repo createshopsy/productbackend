@@ -16,8 +16,8 @@ app.use(express.json());
 const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
-// const httpServer = require("http");
 
+// const httpServer = require("http");
 // const server = httpServer.createServer(app);
 
 const io = require("socket.io")(7654, {
@@ -43,15 +43,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", async (data) => {
-
     client.messages
       .create({
         body: data.message,
         from: "+12513090514",
         to: "+918102473490",
       })
-      .then((message) => console.log(message));
-
+      .then((message) => console.log(message, "number messagessssss"));
     const receiverId = storedata[data.receiverId];
     const senderId = storedata[data.senderId];
     const id1 = data.receiverId;
