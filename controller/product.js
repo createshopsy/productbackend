@@ -273,7 +273,7 @@ const updatequantity = async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "Quantity updated successfully", updatedProduct });
+      .json({ message: "Quantity updated successfully" });
   } catch (error) {
     return res
       .status(500)
@@ -774,12 +774,14 @@ const videocall = async (req, res) => {
   }
 };
 
-// const { Vonage } = require('@vonage/server-sdk')
-
-// const vonage = new Vonage({
-//   apiKey: "c4b503bc",
-//   apiSecret: "B8e26Qmc7wVGbq9e"
-// })
+const reply=()=>{
+  
+  try {
+    
+  } catch (error) {
+    
+  }
+}
 
 
 module.exports = {
@@ -804,4 +806,5 @@ module.exports = {
   chats,
   getmessage,
   videocall,
+  reply
 };
