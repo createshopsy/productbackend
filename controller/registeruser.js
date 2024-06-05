@@ -43,7 +43,7 @@ const getuser = async (req, res) => {
 
 const getsequence = async (req, res) => {
   try {
-    const sequence=await Sequence.find()
+    const sequence = await Sequence.find();
     // const sequence = new Sequence();
     // sequence.save()
     res.status(200).json({ message: "success", sequence });
@@ -56,7 +56,7 @@ const getsequence = async (req, res) => {
 
 const updatecolumn = async (req, res) => {
   const { updatedColumns } = await req?.body;
-  
+
   try {
     const dbSequence = await Sequence.find({});
 
@@ -83,7 +83,12 @@ const postregister = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded." });
     }
-
+    const existingUser = await register.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Email already exists in database." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10); //---encrypt password with bcrypt and hash
     const user = new register({
       username,
@@ -119,7 +124,6 @@ const updateuser = async (req, res) => {
     }
     res.status(200).json({ message: "User updated successfully", updatedUser });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -134,7 +138,9 @@ const updateimage = async (req, res) => {
       updateData.image = result.secure_url;
     }
 
-    const update = await register.findByIdAndUpdate(userId, updateData, { new: true }).select("image");
+    const update = await register
+      .findByIdAndUpdate(userId, updateData, { new: true })
+      .select("image");
 
     if (!update) {
       return res.status(404).json({ message: "User not found" });
@@ -169,7 +175,6 @@ const userget = async (req, res) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body)
   try {
     const user = await register.findOne({ email });
 

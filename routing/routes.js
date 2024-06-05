@@ -36,9 +36,8 @@ const {
   chats,
   getmessage,
   videocall,
-  reply,
- 
 } = require("../controller/product");
+
 const {
   authenticateUser,
   postregister,
@@ -54,10 +53,30 @@ const {
   // changeprofile,
 } = require("../controller/registeruser");
 
+const {
+  instausersave,
+  Instapost,
+  instalogin,
+  InstaProfile,
+  InstauserbyId,
+  getInstapost,
+  Likepost,
+  GetAllUser,
+  Getqueryname,
+  GetAllPost,
+  editProfile,
+  CommentSave,
+  GetAllcomment,
+  DeletePost,
+  GetUserById,
+  Followuser,
+  GetFollowCount,
+} = require("../controller/instafeature");
+
 //---get---
 router.get("/alluser", getuser);
 router.get("/alluser/:id", authenticateUser, userget);
-router.get("/getmessage/:id", authenticateUser,getmessage);
+router.get("/getmessage/:id", authenticateUser, getmessage);
 router.get("/showall", getproducts);
 router.get("/allproducts", authenticateUser, getallproducts);
 router.get("/pagination", authenticateUser, shows);
@@ -75,7 +94,7 @@ router.get("/getsequence", getsequence);
 // router.get("/show",verifyed,tokenverify);
 // router.get("/sendmail",sendmail)
 
-//----post---
+//----post-----\
 router.post(
   "/save",
   upload.fields([{ name: "image" }, { name: "video" }]),
@@ -87,10 +106,38 @@ router.post("/cart", authenticateUser, getusercartid);
 router.post("/add-to-cart", authenticateUser, addToCart);
 router.post("/payment", authenticateUser, payment);
 router.post("/paywithproduct/:id", authenticateUser, paymentwithsingleproduct);
-router.post("/savechats",authenticateUser,chats)
-router.post("/reply",reply)
-router.post("/videocall",authenticateUser, videocall)
+router.post("/savechats", authenticateUser, chats);
+router.post("/videocall", authenticateUser, videocall);
 // router.post("/updateprofile",changeprofile)
+
+//------instapost--------
+router.post("/instauser", upload.single("image"), instausersave);
+router.post("/instalogin", instalogin, InstaProfile);
+router.post(
+  "/instapost",
+  authenticateUser,
+  upload.fields([{ name: "image" }, { name: "video" }]),
+  Instapost
+);
+
+//--instaget------
+router.get("/getprofile", authenticateUser, InstauserbyId);
+router.get("/getpost", authenticateUser, getInstapost);
+router.get("/getallinstauser", GetAllUser);
+router.get("/getquery", Getqueryname);
+router.get("/getallpost/:id", GetAllPost);
+router.get("/getcomment/:id",authenticateUser,GetAllcomment)
+router.get("/getprofile/:id",GetUserById)
+router.get("/getcount",authenticateUser,GetFollowCount)
+
+//-----instaput---
+router.post("/postlike", authenticateUser, Likepost);
+router.post("/comment",authenticateUser,CommentSave)
+router.post("/follow/:id",authenticateUser,Followuser)
+router.put("/edituser/:id",authenticateUser,editProfile)
+
+// router.put("/postcomment",authenticateUser,Commentpost)
+
 
 //---update--
 router.put("/updatequantities/:id", authenticateUser, updatequantity);
@@ -106,6 +153,6 @@ router.put("/updateuserorder", updatecolumn);
 //---delete--
 router.delete("/delete/:id", authenticateUser, deleteCartProduct);
 router.delete("/productdelete/:id", authenticateUser, Deleteproducts);
-
+router.delete("/deletepost/:id",authenticateUser,DeletePost)
 
 module.exports = router;

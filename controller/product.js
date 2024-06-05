@@ -149,14 +149,15 @@ const addToCart = async (req, res) => {
         Productquantity.quantity += +quantity;
         await Productquantity.save();
         return res.status(200).json({ message: "Quantity Add Successfully" });
-      } else {
+      } 
+      else
+       {
         const products = new productcart({
           cartId: cart._id,
           productId: productId,
           quantity: quantity,
         });
         await products.save();
-        console.log();
       }
       return res.status(200).json({ message: "Products Add Successfully" });
     } else {
@@ -322,7 +323,7 @@ const payment = async (req, res) => {
 const ordersuccess = async (req, res) => {
   const userId = req.userId;
   const { id } = req.params;
-  console.log(req.userId);
+
   try {
     const usermail = await users.findById(userId);
     const useremail = usermail.email;
@@ -396,6 +397,8 @@ const ordersuccess = async (req, res) => {
           await transporter.sendMail(mailOptions);
         }
       });
+      // console.log(transporter,"transporter")
+      // console.log(mailOptions,"mailOptions")
 
       await productcart.deleteMany({
         cartId: session.client_reference_id,
@@ -693,6 +696,7 @@ const getsingleproductorder = async (req, res) => {
           },
         });
 
+   
         const mailOptions = {
           from: "usercreator143@gmail.com",
           to: useremail,
@@ -703,7 +707,7 @@ const getsingleproductorder = async (req, res) => {
         };
         await transporter.sendMail(mailOptions);
       }
-
+      
       return res.status(200).json({
         message: "Payment successful.......",
       });
@@ -739,10 +743,10 @@ const chats = async (req, res) => {
     res.status(500).json({ error: "Failed to create a chat." });
   }
 };
+
 const getmessage = async (req, res) => {
   const id1 = req.params.id;
   const userId = req.userId;
-  console.log(req.userId);
   try {
     const user1 = await users.findById({ _id: id1 });
     const user2 = await users.findById({ _id: userId });
@@ -774,14 +778,6 @@ const videocall = async (req, res) => {
   }
 };
 
-const reply=()=>{
-  
-  try {
-    
-  } catch (error) {
-    
-  }
-}
 
 
 module.exports = {
@@ -806,5 +802,5 @@ module.exports = {
   chats,
   getmessage,
   videocall,
-  reply
+
 };

@@ -16,10 +16,8 @@ const product_route = require("./routing/routes");
 const users = require("./schema/register");
 const { Chats } = require("./schema/Chat");
 
-// const httpServer = require("http");
-// const server = httpServer.createServer(app);
 
-const io = require("socket.io")(7654, {
+const io = require("socket.io")(5643, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],

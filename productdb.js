@@ -36,3 +36,12 @@ module.exports = connectDB;
 //     }
 // }
 // start()
+
+
+
+
+// const server=new ApolloServer({
+//   // typeDefs:schema.typeDefs ,resolvers:schema.resolvers,
+//   typeDefs:typeDefs ,resolvers:resolvers,
+//   csrfPrevention: false
+// })
